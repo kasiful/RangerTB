@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
+    <meta name="description" content="RangerTB" />
+    <meta name="author" content="Tim RangerTB" />
+    <meta property="og:site_name" content="" />
+    <meta property="og:site" content="" />
+    <meta property="og:title" content="" />
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:url" content="" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>RangerTB - Alarm Obat</title>
+    <link rel="stylesheet" href="assets/bootstrap5/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="px-4 py-5 my-5 text-center">
+            <img class="d-block mx-auto mb-4" src="assets/gambar/skrining.png" alt="" width="75%" height="75%">
+            <h1 class="display-5 fw-bold">Alarm Obat</h1>
+            <div class="col-lg-6 mx-auto">
+                <p class="lead mb-4">
+                    ALARM OBAT adalah menu untuk mengatur jadwal minum obat kamu agar tuntas terbebas dari bahaya TB
+                </p>
+
+                <!-- <div class="row" style="text-align: center;">
+          <div class="col" style="margin-bottom: 20px;">
+            <div class="card" style="width: 100%;">
+              <img src="assets/gambar/skrining_untuk_sendiri.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Diri Sendiri</h5>
+                <p class="card-text">Lakukan pemeriksaan untuk diri sendiri di platform ini</p>
+                <a href="skrining-sendiri.html" class="btn btn-primary">Periksa</a>
+              </div>
+            </div>
+          </div>
+          <div class="col" style="margin-bottom: 20px;">
+            <div class="card" style="width: 100%;">
+              <img src="assets/gambar/skrining_untuk_orang.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Keluarga</h5>
+                <p class="card-text">Bantu keluarga anda untuk memeriksakan diri</p>
+                <a href="#" class="btn btn-primary">Periksa</a>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+                <!-- <div class="row">
+          <div class="col-4">
+            <img src="assets/gambar/skrining_untuk_orang.png" class="card-img-top" alt="...">
+          </div>
+          <div class="col-8">
+            <form action="skrining-sendiri.html">
+              <div class="mb-3">
+                <label for="user" class="form-label">Pilih anggota keluarga</label>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="data" id="user">
+                  
+                </select>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+
+        </div> -->
+
+                <div class="row">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Jadwal</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="list_tabel">
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Button trigger modal -->
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Alarm Obat</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <input type="hidden" id="i">
+                            <div class="mb-3">
+                                <label for="tahap_pengobatan" class="form-label">Tahap Pengobatan</label>
+                                <select id="tahap_pengobatan" class="form-select" onchange="show_jadwal_harian()">
+                                    <option value="awal">Awal</option>
+                                    <option value="lanjutan">Lanjutan</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="berat_badan" class="form-label">Berat Badan</label>
+                                <input type="number" class="form-control" id="berat_badan" onchange="info_berat_badan()">
+                                <p id="info_berat_badan" style="color: red;"></p>
+                                <!-- <select id="berat_badan" class="form-select">
+                                    <option value="H">Isoniasid (H)</option>
+                                    <option value="R">Rifampisis (R)</option>
+                                    <option value="Z">Pirazinamid (Z)</option>
+                                    <option value="E">Etambutol (E)</option>
+                                </select> -->
+                            </div>
+                            <div class="mb-3">
+                                <label for="jumlah_obat" class="form-label">Jumlah Obat</label>
+                                <input type="number" class="form-control" id="jumlah_obat">
+                            </div>
+                            <div class="mb-3">
+                                <label for="tanggal_awal" class="form-label">Tanggal Awal Minum Obat</label>
+                                <input type="date" class="form-control" id="tanggal_awal">
+                            </div>
+                            <div class="mb-3">
+                                <label for="waktu_awal_minum_obat" class="form-label">Setting Alarm</label>
+                                <input type="time" class="form-control" id="waktu_awal_minum_obat">
+                            </div>
+
+                            <div id="jadwal_harian">
+                                <p>Pilih Jadwal Harian</p>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input hari_minum_obat" value="senin"
+                                        id="jadwal_senin">
+                                    <label class="form-check-label" for="jadwal_senin">Senin</label>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input hari_minum_obat" value="selasa"
+                                        id="jadwal_selasa">
+                                    <label class="form-check-label" for="jadwal_selasa">Selasa</label>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input hari_minum_obat" value="rabu"
+                                        id="jadwal_rabu">
+                                    <label class="form-check-label" for="jadwal_rabu">Rabu</label>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input hari_minum_obat" value="kamis"
+                                        id="jadwal_kamis">
+                                    <label class="form-check-label" for="jadwal_kamis">Kamis</label>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input hari_minum_obat" value="jumat"
+                                        id="jadwal_jumat">
+                                    <label class="form-check-label" for="jadwal_jumat">Jumat</label>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input hari_minum_obat" value="sabtu"
+                                        id="jadwal_sabtu">
+                                    <label class="form-check-label" for="jadwal_sabtu">Sabtu</label>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input hari_minum_obat" value="minggu"
+                                        id="jadwal_minggu">
+                                    <label class="form-check-label" for="jadwal_minggu">Minggu</label>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-primary" onclick="set_alarm_obat()">Tambahkan
+                                Alarm</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="simpan_perubahan()">Simpan
+                            Perubahan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="assets/bootstrap5/js/bootstrap.min.js"></script>
+
+    <script>
+        var data = ``;
+        var data_json = ``;
+        var list_tabel = ``
+    </script>
+
+    <script>
+        function get_family_list() {
+            data = Android.get_dataset();
+            data_json = JSON.parse(data);
+            list_tabel = ``
+            for (var i = 0; i < data_json.length; i++) {
+                list_tabel = list_tabel +
+                    `<tr>
+                    <td>${data_json[i].nama}</td>
+                    <td>${data_json[i].waktu_awal_minum_obat}</td>
+                    <td><button class="btn btn-primary" onclick="edit(${i})">Edit</button></td>
+                </tr>`
+            }
+            document.getElementById("list_tabel").innerHTML = list_tabel
+        }
+        get_family_list()
+
+    </script>
+
+    <script>
+        var list_tahap_pengobatan = ["Awal", "Lanjutan"]
+        // var list_berat_badan = ["Isoniasid (H)", "Rifampisis (R)", "Pirazinamid (Z)", "Etambutol (E)"]
+
+
+
+        var myModal = new bootstrap.Modal(document.getElementById('exampleModal'))
+
+    </script>
+
+    <script>
+        function show_jadwal_harian() {
+            if (document.getElementById("tahap_pengobatan").value == 'Awal') {
+                document.getElementById("jadwal_harian").style.display = "none"
+            } else {
+                document.getElementById("jadwal_harian").style.display = "block"
+            }
+        }
+
+    </script>
+
+    <script>
+
+        function edit(iter) {
+
+            get_tahap_pengobatan = data_json[iter].tahap_pengobatan
+            get_berat_badan = data_json[iter].berat_badan
+            get_jumlah_obat = data_json[iter].jumlah_obat
+            get_waktu_awal_minum_obat = data_json[iter].waktu_awal_minum_obat
+
+            var temp = ``
+            for (var i = 0; i < list_tahap_pengobatan.length; i++) {
+                if (list_tahap_pengobatan[i] == get_tahap_pengobatan) {
+                    temp = temp + `<option value="${list_tahap_pengobatan[i]}" selected>${list_tahap_pengobatan[i]}</option>`
+                } else {
+                    temp = temp + `<option value="${list_tahap_pengobatan[i]}">${list_tahap_pengobatan[i]}</option>`
+                }
+            }
+            document.getElementById("tahap_pengobatan").innerHTML = temp
+
+            // var temp = ``
+            // for (var i = 0; i < list_berat_badan.length; i++) {
+            //     if (list_berat_badan[i] == get_berat_badan) {
+            //         temp = temp + `<option value="${list_berat_badan[i]}" selected>${list_berat_badan[i]}</option>`
+            //     } else {
+            //         temp = temp + `<option value="${list_berat_badan[i]}">${list_berat_badan[i]}</option>`
+            //     }
+            // }
+            // document.getElementById("berat_badan").innerHTML = temp
+
+            document.getElementById("jumlah_obat").value = get_jumlah_obat
+            document.getElementById("waktu_awal_minum_obat").value = get_waktu_awal_minum_obat
+            document.getElementById("i").value = iter
+
+            show_jadwal_harian()
+
+            myModal.show()
+        }
+
+    </script>
+
+    <script>
+        function info_berat_badan(){
+            var temp = parseInt(document.getElementById("berat_badan").value)
+            var teks = ""
+            if (temp < 30){
+                teks = "gunakan tabel dosis anak sebagai acuan"
+            } else if (temp >= 30 && temp <= 37) {
+                teks = "minum 2 tablet"
+            } else if (temp >= 38 && temp <= 54) {
+                teks = "minum 3 tablet"
+            } else if (temp >= 55 && temp <= 70) {
+                teks = "minum 4 tablet"
+            } else if (temp >= 71) {
+                teks = "minum 5 tablet"
+            }
+            document.getElementById("info_berat_badan").innerHTML = teks
+        }
+    </script>
+
+    <script>
+        function set_alarm_obat() {
+            var checkedValue = "";
+            if (document.getElementById("tahap_pengobatan").value == "Awal") {
+                checkedValue = ";";
+            } else {
+                var inputElements = document.getElementsByClassName('hari_minum_obat');
+                for (var j = 0; inputElements[j]; ++j) {
+                    if (inputElements[j].checked) {
+                        checkedValue = checkedValue + inputElements[j].value + ";";
+                    }
+                }
+            }
+            checkedValue = checkedValue.slice(0, -1);
+            Android.set_alarm_obat(document.getElementById("waktu_awal_minum_obat").value, checkedValue)
+        }
+    </script>
+
+    <script>
+        function simpan_perubahan() {
+            
+            var i = parseInt(document.getElementById("i").value)
+            // Android.toast(i)
+
+            data_json[i].tahap_pengobatan = document.getElementById("tahap_pengobatan").value
+            data_json[i].berat_badan = document.getElementById("berat_badan").value
+            data_json[i].jumlah_obat = document.getElementById("jumlah_obat").value
+            data_json[i].waktu_awal_minum_obat = document.getElementById("waktu_awal_minum_obat").value
+            data_json[i].tanggal_awal = document.getElementById("tanggal_awal").value
+
+            var checkedValue = "";
+            if (document.getElementById("tahap_pengobatan").value == "Awal") {
+                checkedValue = ";";
+            } else {
+                var inputElements = document.getElementsByClassName('hari_minum_obat');
+                for (var j = 0; inputElements[j]; ++j) {
+                    if (inputElements[j].checked) {
+                        checkedValue = checkedValue + inputElements[j].value + ";";
+                    }
+                }
+            }
+            checkedValue = checkedValue.slice(0, -1);
+            data_json[i].jadwal_harian = checkedValue;
+
+
+            
+            var data_json_stringify = JSON.stringify(data_json);
+            Android.edit_nilai_alarm_obat(data_json_stringify);
+            myModal.hide()
+            get_family_list()
+        }
+    </script>
+
+
+
+
+</body>
+
+
+
+
+
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
+  <meta name="description" content="RangerTB" />
+  <meta name="author" content="Tim RangerTB" />
+  <meta property="og:site_name" content="" />
+  <meta property="og:site" content="" />
+  <meta property="og:title" content="" />
+  <meta property="og:description" content="" />
+  <meta property="og:image" content="" />
+  <meta property="og:url" content="" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>RangerTB - Skrining</title>
+  <link rel="stylesheet" href="assets/bootstrap5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
+    integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin="" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="px-4 py-5 my-5 text-center">
+      <img class="d-block mx-auto mb-4" src="assets/gambar/skrining_hasil.png" alt="" width="75%" height="75%">
+      <h1 class="display-5 fw-bold">Skrining Mandiri - Hasil</h1>
+      <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">
+          Berdasarkan hasil skrining, anda teridentifikasi <b id="hasil1"></b>.
+        </p>
+        <p class="lead mb-4" id="hasil2"></p>
+
+        <p>Puskesas dan Rumah Sakit sekitar anda</p>
+        <div class="row">
+          <div class="col">
+            <div id="map" style="height: 180px;"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <table class="table table-hovered table-bordered">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Puskesmas/RS</th>
+                <th>Alamat</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Puskesmas 1</td>
+                <td>Alamat 1</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>RS 2</td>
+                <td>Alamat 2</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Puskesmas 3</td>
+                <td>Alamat 3</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>RS 4</td>
+                <td>Alamat 4</td>
+              </tr>
+            </tbody>
+  
+          </table>
+        </div>
+
+        <div class="row">
+          <button class="btn btn-primary" onclick="Android.finish()">Kembali Ke Menu Utama</button>
+        </div>
+
+        <!-- <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Primary button</button>
+                <button type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</button>
+              </div> -->
+      </div>
+    </div>
+
+
+  </div>
+
+  <script src="assets/bootstrap5/js/bootstrap.min.js"></script>
+  <script>
+    // You can get url_string from window.location.href if you want to work with
+    // the URL of the current page
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var skor = url.searchParams.get("jawaban");
+
+    var hasil1 = document.getElementById("hasil1");
+    var hasil2 = document.getElementById("hasil2");
+    if (skor >= 2) {
+      hasil1.innerHTML = "Penderita TB"
+      hasil2.innerHTML = "Segera lakukan pemeriksaan ke puskesmas / Rumah Sakit terdekat untuk diidentifikasi langsung oleh dokter."
+    } else {
+      hasil1.innerHTML = "Bukan Penderita TB"
+      hasil2.innerHTML = "Untuk informasi lebih lanjut, anda dapat mendatangi Puskesmas / Rumah Sakit terdekat untuk dilakukan pemeriksaan. Tetaplah waspada dan jaga kesehatan."
+    }
+  </script>
+
+  <!-- Make sure you put this AFTER Leaflet's CSS -->
+  <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+    integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
+
+  <script>
+
+    var map = L.map('map').setView([51.505, -0.09], 13);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    // hapus logo ukraina
+    document.getElementsByClassName('leaflet-control-attribution')[0].style.display = 'none';
+
+  </script>
+
+
+</body>
+
+
+
+
+
+</html>

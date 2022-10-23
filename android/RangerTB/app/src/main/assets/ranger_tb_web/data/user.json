@@ -1,0 +1,42 @@
+[
+  {
+    "nama": "ayah",
+    "nip": "1374020101900001",
+    "hasil_skrining": "",
+    "validasi": "",
+    "tahap_pengobatan": "",
+    "nama_obat": "",
+    "jumlah_obat": "",
+    "waktu_awal_minum_obat": ""
+  },
+  {
+    "nama": "ibu",
+    "nip": "1374020101910001",
+    "hasil_skrining": "",
+    "validasi": "",
+    "tahap_pengobatan": "",
+    "nama_obat": "",
+    "jumlah_obat": "",
+    "waktu_awal_minum_obat": ""
+  },
+  {
+    "nama": "anak1",
+    "nip": "1374020101200001",
+    "hasil_skrining": "",
+    "validasi": "",
+    "tahap_pengobatan": "",
+    "nama_obat": "",
+    "jumlah_obat": "",
+    "waktu_awal_minum_obat": ""
+  },
+  {
+    "nama": "anak2",
+    "nip": "1374020101220001",
+    "hasil_skrining": "",
+    "validasi": "",
+    "tahap_pengobatan": "",
+    "nama_obat": "",
+    "jumlah_obat": "",
+    "waktu_awal_minum_obat": ""
+  }
+]

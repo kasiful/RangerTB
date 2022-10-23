@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
+  <meta name="description" content="RangerTB" />
+  <meta name="author" content="Tim RangerTB" />
+  <meta property="og:site_name" content="" />
+  <meta property="og:site" content="" />
+  <meta property="og:title" content="" />
+  <meta property="og:description" content="" />
+  <meta property="og:image" content="" />
+  <meta property="og:url" content="" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>RangerTB - Skrining Sendiri</title>
+  <link rel="stylesheet" href="assets/bootstrap5/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="px-4 text-center" style="margin-top: 5em;">
+      <img class="d-block mx-auto mb-4" src="assets/gambar/skrining_untuk_sendiri.png" alt="" width="75%" height="75%">
+      <h1 class="display-5 fw-bold">Skrining Mandiri<br />(Diri Sendiri)</h1>
+      <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">
+          <a id="nama"></a> <br />
+          nik: <a id="nik"></a>
+        </p>
+      </div>
+    </div>
+
+    <div id="pertanyaan_container"></div>
+    <div class="row float-end" style="margin-bottom: 30px;">
+      <div class="col">
+        <button type="button" class="btn btn-primary" onclick="kirimData()">Kirim dan Periksa</button>
+      </div>
+    </div>
+
+    <form action="skrining-sendiri-result.html" method="get" id="kirim_jawaban">
+      <input type="hidden" name="nik" id="kirim_nik">
+      <input type="hidden" name="jawaban" id="jawaban">
+    </form>
+
+  </div>
+
+  <script src="assets/bootstrap5/js/bootstrap.min.js"></script>
+
+  <!-- Soal -->
+  <script>
+    const pertanyaan = [{"id":1,"pertanyaan":"Apakah Kamu mengalami batuk berdahak lebih dari 2 minggu?","opsi":[{"key":"Ya","val":1},{"key":"Tidak","val":0}],"gambar":"soal01.png"},{"id":2,"pertanyaan":"Apakah Kamu pernah batuk berdarah dalam 1 tahun terakhir?","opsi":[{"key":"Ya","val":1},{"key":"Tidak","val":0}],"gambar":"soal02.png"},{"id":3,"pertanyaan":"Apakah Kamu saat ini sedang batuk dan sudah lebih dari 1 minggu?","opsi":[{"key":"Ya","val":1},{"key":"Tidak","val":0}],"gambar":"soal03.png"},{"id":4,"pertanyaan":"Apakah Kamu dalam dua bulan terakhir sering mengalami demam/meriang?","opsi":[{"key":"Ya","val":1},{"key":"Tidak","val":0}],"gambar":"soal04.png"},{"id":5,"pertanyaan":"Apakah Kamu dalam dua bulan terakhir mengalami nyeri dada?","opsi":[{"key":"Ya","val":1},{"key":"Tidak","val":0}],"gambar":"soal05.png"},{"id":6,"pertanyaan":"Apakah Kamu dalam dua bulan terakhir mengalami sesak napas?","opsi":[{"key":"Ya","val":1},{"key":"Tidak","val":0}],"gambar":"soal06.png"},{"id":7,"pertanyaan":"Apakah Kamu dalam dua bulan terakhir mengalami kelesuan atau badan lemas tanpa melakukan aktivitas berat?","opsi":[{"key":"Ya","val":1},{"key":"Tidak","val":0}],"gambar":"soal07.png"},{"id":8,"pertanyaan":"Apakah Kamu dalam 2 bulan terakhir mengalami penurunan nafsu makan tanpa sebab ?","opsi":[{"key":"Ya","val":1},{"key":"Tidak","val":0}],"gambar":"soal08.png"},{"id":9,"pertanyaan":"Apakah Kamu dalam 2 bulan terakhir mengalami penurunan berat badan tanpa sebab yang jelas?","opsi":[{"key":"Ya","val":1},{"key":"Tidak","val":0}],"gambar":"soal09.png"},{"id":10,"pertanyaan":"Apakah Kamu sering berkeringat pada malam hari tanpa sebab yang jelas walaupun suhu ruangan normal atau sejuk?","opsi":[{"key":"Ya","val":1},{"key":"Tidak","val":0}],"gambar":"soal10.png"},{"id":11,"pertanyaan":"Apakah Kamu merokok/sering berinteraksi dengan perokok aktif?","opsi":[{"key":"Ya","val":1},{"key":"Tidak","val":0}],"gambar":"soal11.png"},{"id":12,"pertanyaan":"Apakah Kamu pernah didiagnosis TBC/flek paru/pengobatan wajib 6 bulan?","opsi":[{"key":"Ya","val":1},{"key":"Tidak","val":0}],"gambar":"soal12.png"},{"id":13,"pertanyaan":"Apakah Kamu pernah tinggal serumah dengan penderita TBC/flek paru?","opsi":[{"key":"Ya","val":1},{"key":"Tidak","val":0}],"gambar":"soal13.png"},{"id":14,"pertanyaan":"Apakah Kamu pernah berada satu ruangan dengan penderita TBC/flek paru?","opsi":[{"key":"Ya","val":1},{"key":"Tidak","val":0}],"gambar":"soal14.png"},{"id":15,"pertanyaan":"Apakah Kamu memiliki Riwayat penyakit diabetes melitus/kencing manis/sakit gula?","opsi":[{"key":"Ya","val":1},{"key":"Tidak","val":0}],"gambar":"soal15.png"},{"id":16,"pertanyaan":"Apakah Kamu memiliki Riwayat penyakit HIV?","opsi":[{"key":"Ya","val":1},{"key":"Tidak","val":0}],"gambar":"soal16.png"},{"id":17,"pertanyaan":"Apakah Kamu pernah menjalani pemeriksaan foto rontgen paru/dada?","opsi":[{"key":"Ya","val":1},{"key":"Tidak","val":0}],"gambar":"soal17.png"}]
+  </script>
+
+  <!-- Menulis soal -->
+  <script>
+    var list_soal = ""
+    for (var i = 0; i < pertanyaan.length; i++) {
+      var opsi = ''
+      for (var j = 0; j < pertanyaan[i].opsi.length; j++) {
+        opsi = opsi + `
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="soal_${i + 1}" id="soal_${i + 1}_${j + 1}" value="${pertanyaan[i].opsi[j].val}">
+                      <label class="form-check-label" for="soal_${i + 1}_${j + 1}">
+                        ${pertanyaan[i].opsi[j].key}
+                      </label>
+                    </div>
+          `
+      }
+
+      var teks = `
+        <div id=soal_${i + 1}>
+              <div class="row">
+                <b>Pertanyaan ${i + 1}</b>
+              </div>
+              <div class="row">
+                <p>${pertanyaan[i].pertanyaan}</p>
+              </div>
+              <div class="row">
+                <div class="col-4" style="height: 100px;">
+                  <img src="assets/gambar/soal_skrining_sendiri/${pertanyaan[i].gambar}" style="height: 100%">
+                </div>
+                <div class="col-8" style="height: 100px;">
+                  <div class="d-flex flex-column justify-content-center" style="height: 100%;">
+                    ${opsi}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr/>
+        `
+
+      list_soal = list_soal + teks
+    }
+    document.getElementById("pertanyaan_container").innerHTML = list_soal
+  </script>
+
+  <script>
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    var data = urlParams.get('data');
+
+    let myArray = data.split(":");
+    var nama = myArray[0]
+    var nik = myArray[1]
+
+    document.getElementById("nama").innerHTML = nama
+    document.getElementById("nik").innerHTML = nik
+    document.getElementById("kirim_nik").innerHTML = nik
+
+  </script>
+
+  <!-- Kirim form -->
+  <script>
+    function kirimData() {
+      try {
+        var jawaban = 0;
+        for (var i = 0; i < pertanyaan.length; i++) {
+          // jawaban.push(document.querySelector(`input[name="soal_${i+1}"]:checked`).value);
+          // alert(document.querySelector(`input[name="soal_${i+1}"]:checked`).value);
+          jawaban = jawaban + parseInt(document.querySelector(`input[name="soal_${i + 1}"]:checked`).value);
+        }
+        document.getElementById("jawaban").value = jawaban;
+        Android.hasil_skrining(nik, jawaban);
+        document.getElementById("kirim_jawaban").submit();
+      } catch(err) {
+        Android.toast("Pastikan sudah mengisi semua pertanyaan")
+        // Android.toast("ERROR: "+err.message)
+      }
+    }
+  </script>
+
+
+
+
+</body>
+
+
+
+
+
+</html>

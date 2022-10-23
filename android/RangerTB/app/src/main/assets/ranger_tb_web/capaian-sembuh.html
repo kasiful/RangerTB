@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
+    <meta name="description" content="RangerTB" />
+    <meta name="author" content="Tim RangerTB" />
+    <meta property="og:site_name" content="" />
+    <meta property="og:site" content="" />
+    <meta property="og:title" content="" />
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:url" content="" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>RangerTB - Skrining</title>
+    <link rel="stylesheet" href="assets/bootstrap5/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="px-4 py-5 my-5 text-center">
+            <img class="d-block mx-auto mb-4" src="assets/gambar/skrining.png" alt="" width="75%" height="75%">
+            <h1 class="display-5 fw-bold">Capaian Sembuh</h1>
+            <div class="col-lg-6 mx-auto">
+
+                <div class="row">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Status</th>
+                                <th>Target</th>
+                            </tr>
+                        </thead>
+                        <tbody id="list_tabel">
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <script src="assets/bootstrap5/js/bootstrap.min.js"></script>
+
+    <script>
+        function obat_per_hari(berat_badan) {
+            var temp = parseInt(berat_badan)
+            var obat_per_hari = -1
+            if (temp < 30) {
+                obat_per_hari = 1
+            } else if (temp >= 30 && temp <= 37) {
+                obat_per_hari = 2
+            } else if (temp >= 38 && temp <= 54) {
+                obat_per_hari = 3
+            } else if (temp >= 55 && temp <= 70) {
+                obat_per_hari = 4
+            } else if (temp >= 71) {
+                obat_per_hari = 5
+            }
+            return (obat_per_hari)
+        }
+
+        //     "nama": "Ayah",
+        // "nik": "1374020101900001",
+        // "hasil_skrining": "",
+        // "validasi": "",
+        // "tahap_pengobatan": "",
+        // "berat_badan": "",
+        // "jumlah_obat": "",
+        // "waktu_awal_minum_obat": "",
+        // "jadwal_harian": ""
+        // tanggal_awal
+
+        function addDays(date, days) {
+            var result = new Date(date);
+            result.setDate(result.getDate() + days);
+            return result;
+        }
+
+        function tanggal_selesai_pengobatan_awal(dset) {
+            var n_hari = Math.ceil(
+                (dset.jumlah_obat) / obat_per_hari(dset.berat_badan)
+            );
+            var tanggal = new Date(dset.tanggal_awal);
+            tanggal = addDays(tanggal, n_hari);
+            return (tanggal.toDateString());
+        }
+
+        function tanggal_selesai_pengobatan_lanjutan(dset) {
+            var n_hari = Math.ceil(
+                (dset.jumlah_obat) / obat_per_hari(dset.berat_badan)
+            )
+            var n_hari = n_hari * 7 / dset.jadwal_harian.split(";").length
+            var tanggal = new Date(dset.tanggal_awal);
+            tanggal = addDays(tanggal, n_hari);
+            return (tanggal.toDateString());
+        }
+
+        function tanggal_selesai(dset){
+            if(dset.tahap_pengobatan == "Awal") {
+                return tanggal_selesai_pengobatan_awal(dset)
+            } else if(dset.tahap_pengobatan == "Lanjutan") {
+                return tanggal_selesai_pengobatan_lanjutan(dset)
+            } else {
+                return("-")
+            }
+        }
+
+    </script>
+
+    <script>
+
+        const data = Android.get_dataset();
+        const data_json = JSON.parse(data);
+
+        data_json
+
+        // var opsi = ``
+        var list_tabel = ``
+        for (var i = 0; i < data_json.length; i++) {
+            // opsi = opsi + `<option value="${data_json[i].nama}:${data_json[i].nik}">${data_json[i].nama}</option>`
+            list_tabel = list_tabel +
+                `<tr>
+        <td>${data_json[i].nama}</td>
+        <td>${data_json[i].tahap_pengobatan}</td>
+        <td>${tanggal_selesai(data_json[i])}</td>
+        
+      </tr>`
+        }
+        // document.getElementById("user").innerHTML = opsi
+        document.getElementById("list_tabel").innerHTML = list_tabel
+
+
+
+
+    </script>
+
+
+</body>
+
+
+
+
+
+</html>

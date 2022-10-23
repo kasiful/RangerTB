@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
+  <meta name="description" content="RangerTB" />
+  <meta name="author" content="Tim RangerTB" />
+  <meta property="og:site_name" content="" />
+  <meta property="og:site" content="" />
+  <meta property="og:title" content="" />
+  <meta property="og:description" content="" />
+  <meta property="og:image" content="" />
+  <meta property="og:url" content="" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>RangerTB - Skrining</title>
+  <link rel="stylesheet" href="assets/bootstrap5/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="px-4 py-5 my-5 text-center">
+      <img class="d-block mx-auto mb-4" src="assets/gambar/skrining.png" alt="" width="75%" height="75%">
+      <h1 class="display-5 fw-bold">Skrining Mandiri</h1>
+      <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">
+          Skrining Mandiri TB adalah pemeriksaan mandiri untuk mengetahui potensi terinfeksi tuberkulosis
+          dengan menjawab pertanyaan-pertanyaan pada form.
+        </p>
+<!--        <p id='testing'></p>-->
+
+        <!-- <div class="row" style="text-align: center;">
+          <div class="col" style="margin-bottom: 20px;">
+            <div class="card" style="width: 100%;">
+              <img src="assets/gambar/skrining_untuk_sendiri.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Diri Sendiri</h5>
+                <p class="card-text">Lakukan pemeriksaan untuk diri sendiri di platform ini</p>
+                <a href="skrining-sendiri.html" class="btn btn-primary">Periksa</a>
+              </div>
+            </div>
+          </div>
+          <div class="col" style="margin-bottom: 20px;">
+            <div class="card" style="width: 100%;">
+              <img src="assets/gambar/skrining_untuk_orang.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Keluarga</h5>
+                <p class="card-text">Bantu keluarga anda untuk memeriksakan diri</p>
+                <a href="#" class="btn btn-primary">Periksa</a>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- <div class="row">
+          <div class="col-4">
+            <img src="assets/gambar/skrining_untuk_orang.png" class="card-img-top" alt="...">
+          </div>
+          <div class="col-8">
+            <form action="skrining-sendiri.html">
+              <div class="mb-3">
+                <label for="user" class="form-label">Pilih anggota keluarga</label>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="data" id="user">
+                  
+                </select>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+
+        </div> -->
+
+        <div class="row">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nama</th>
+                <th>Hasil</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="list_tabel">
+              
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+
+  <script src="assets/bootstrap5/js/bootstrap.min.js"></script>
+  <script>
+
+    // const queryString = window.location.search;
+    // const urlParams = new URLSearchParams(queryString);
+    // const data = urlParams.get('data');
+    
+    const data = Android.get_dataset();
+    const data_json = JSON.parse(data);
+    // document.getElementById("testing").innerHTML = data_json[0].nama;
+
+    // var opsi = ``
+    var list_tabel = ``
+    for (var i=0; i<data_json.length; i++){
+      // opsi = opsi + `<option value="${data_json[i].nama}:${data_json[i].nik}">${data_json[i].nama}</option>`
+      list_tabel = list_tabel +  
+      `<tr>
+        <td>${data_json[i].nama}</td>
+        <td>${data_json[i].hasil_skrining}</td>
+        <td><a href="skrining-sendiri.html?data=${data_json[i].nama}:${data_json[i].nik}">Periksa</a></td>
+      </tr>`
+    }
+    // document.getElementById("user").innerHTML = opsi
+    document.getElementById("list_tabel").innerHTML = list_tabel
+
+    
+
+
+  </script>
+
+
+</body>
+
+
+
+
+
+</html>
